@@ -1,0 +1,33 @@
+//Problem 189 - Leetcode
+//Given an integer array nums, rotate the array to the right by k steps, where k is non-negative.
+
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        //Brute Force in O(n^2)
+        // int n = nums.size();
+
+        // while(k>0){
+        //     int temp =  nums[n-1];
+        //     int i;
+
+        //     for(i=0;i<n;i++){
+        //         nums[n-i-1]=nums[n-i-2];
+        //     }
+        //     nums[n-i]=temp;
+        //     k--;
+        // }
+ 
+
+    //required solution
+    int n = nums.size();
+    vector<int> temp(n);
+    for(int i=0;i<n;i++){
+        temp[(i+k)%n]=nums[i];
+    }
+    nums=temp;
+
+
+
+    }
+};
