@@ -1,0 +1,53 @@
+//Problem - GFG
+
+//{ Driver Code Starts
+//Initial Template for C++
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+
+// } Driver Code Ends
+//User function Template for C++
+class Solution
+{
+    public:
+    
+     void reverseStr(int i,string &s){
+        if(i >= s.size() - i - 1) return;
+        swap(s[i],s[s.size() - i - 1]);
+        reverseStr(i+1,s);
+    }
+    
+    string reverseWord(string str)
+    {
+        // Your code goes here
+      reverseStr(0,str);
+        return str;           
+  
+    }
+};
+
+
+
+//{ Driver Code Starts.
+
+int main() {
+	
+	int t;
+	cin>>t;
+	while(t--)
+	{
+    	string s;
+    	cin >> s;
+    	Solution ob;
+    	cout << ob.reverseWord(s) << endl;
+	}
+	return 0;
+	
+}
+
+
+// } Driver Code Ends
