@@ -1,0 +1,61 @@
+//Problem - Leetcode
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+    //     int row = matrix.size();
+    //     int col = matrix[0].size();
+
+    //     vector<vector<int>>visited = matrix;
+
+    //     for(int i=0;i<row;i++){
+    //         for(int j=0;j<col;j++){
+    //             if(matrix[i][j]==0){
+    //                 for(int k=0;k<col;k++){
+    //                     visited[i][k]=0;
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     for(int i=0;i<row;i++){
+    //         for(int j=0;j<col;j++){
+    //             if(matrix[i][j]==0){
+    //                 for(int k=0;k<row;k++){
+    //                     visited[k][j]=0;
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     for(int i=0;i<row;i++){
+    //         for(int j=0;j<col;j++){
+    //             matrix[i][j]=visited[i][j];
+    //         }
+    //     }
+    // }
+
+        
+        int n = matrix.size();
+        int m = matrix[0].size();
+
+        unordered_set<int> rows;
+        unordered_set<int> cols;
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(matrix[i][j]==0){
+                    rows.insert(i);
+                    cols.insert(j);
+                }
+            }
+        }
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(rows.count(i)>0 || cols.count(j)>0){
+                    matrix[i][j]=0;
+                }
+            }
+        }
+    }
+};
