@@ -1,0 +1,16 @@
+//Problem - Coding Ninjas
+#include <bits/stdc++.h> 
+void reverseArray(vector<int> &arr , int m)
+{
+	// Write your code here.
+	stack<int> stk;
+	for(int i=m+1;i<arr.size();i++){
+		stk.push(arr[i]);
+	}
+
+	for(int i=m+1;i<arr.size();i++){
+		arr[i] = stk.top();
+		stk.pop();
+	}
+
+}
