@@ -1,21 +1,20 @@
 //Problem - Coding Ninjas 
 
-
 #include <bits/stdc++.h> 
-void solve(stack<int>& myStack, int x){
+void solve(stack<int>& s, int x){
     //base case
-    if(myStack.empty()){
-        myStack.push(x);
+    if(s.empty()){
+        s.push(x);
         return;
     }
 
-    int num = myStack.top();
-    myStack.pop();
+    int num = s.top();
+    s.pop();
 
     //Recursive case
-    solve(myStack,x);
+    solve(s,x);
 
-    myStack.push(num);
+    s.push(num);
 }
 
 stack<int> pushAtBottom(stack<int>& myStack, int x) 
