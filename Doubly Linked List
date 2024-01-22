@@ -1,0 +1,201 @@
+#include <iostream>
+using namespace std;
+
+// Doubly Linled List
+// Linked List - Insertion ,Deletion ,Traversal
+
+class Node
+{
+public:
+    int data;
+    Node *prev;
+    Node *next;
+
+    Node(int data)
+    {
+        this->data = data;
+        this->prev = NULL;
+        this->next = NULL;
+    }
+    ~Node()
+    {
+        int value = this->data; // No need
+        // memory free
+        if (this->next != NULL)
+        {
+            delete next;
+            this->next = NULL;
+        }
+        cout << "Memory is free for node with data : " << value << endl;
+    }
+};
+
+void InsertionAtHead(Node *&head, Node *&tail, int data)
+{
+    if (head == NULL)
+    {
+        Node *temp = new Node(data);
+        head = temp;
+        tail = temp;
+    }
+    else
+    {
+        Node *temp = new Node(data);
+        temp->next = head;
+        head->prev = temp;
+        head = temp;
+    }
+}
+void InsertionAtTail(Node *&head, Node *&tail, int data)
+{
+    if (tail == NULL)
+    {
+        Node *temp = new Node(data);
+        head = temp;
+        tail = temp;
+    }
+    else
+    {
+        Node *temp = new Node(data);
+        tail->next = temp;
+        temp->prev = tail;
+        tail = temp;
+    }
+}
+
+void InsertionAtPosition(Node *&head, Node *&tail, int position, int data)
+{
+    // Insertion at start
+    if (position == 1)
+    {
+        InsertionAtHead(head, tail, data);
+        return;
+    }
+
+    Node *temp = head;
+    int count = 1;
+    while (count < position - 1)
+    {
+        temp = temp->next;
+        count++;
+    }
+
+    // Insertion at end
+    if (temp->next == NULL)
+    {
+        InsertionAtTail(head, tail, data);
+        return;
+    }
+
+    Node *NodeToInsert = new Node(data);
+    NodeToInsert->next = temp->next;
+    temp->next->prev = NodeToInsert;
+    NodeToInsert->prev = temp;
+    temp->next = NodeToInsert;
+}
+
+void DeleteNode(Node *&head, Node *&tail, int position)
+{
+    // deletion at head or start
+    if (position == 1)
+    {
+        Node *temp = head;
+        temp->next->prev = NULL;
+        head = temp->next;
+        temp->next = NULL;
+        delete temp;
+    }
+    else
+    {
+        Node *curr = head;
+        Node *prev = NULL;
+        int count = 1;
+        while (count < position)
+        {
+            prev = curr;
+            curr = curr->next;
+            count++;
+        }
+        // curr->next->prev = curr->prev;
+        // curr->prev = NULL;
+        // prev->next = curr->next;
+
+        // // IF deletion node is tail
+        // if (curr->next == NULL)
+        // {
+        //     tail = prev;
+        // }
+        // curr->next = NULL;
+        // delete curr;
+
+        if (curr->next == NULL)
+        {
+            curr->prev = NULL;
+            prev->next = curr->next;
+            curr->next = NULL;
+            tail = prev;
+            delete curr;
+        }
+        else
+        {
+            curr->next->prev = curr->prev;
+            curr->prev = NULL;
+            prev->next = curr->next;
+            curr->next = NULL;
+            delete curr;
+        }
+    }
+}
+
+void print(Node *head)
+{
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+
+int getlength(Node *head)
+{
+    Node *temp = head;
+    int len = 0;
+    while (temp != NULL)
+    {
+        len++;
+        temp = temp->next;
+    }
+    return len;
+}
+
+int main()
+{
+    // Node *node1 = new Node(10);
+    // Node *head = node1;
+    // Node *tail = node1;
+    // print(head);
+    // cout << getlength(head)<<endl;
+    Node *head = NULL;
+    Node *tail = NULL;
+
+    InsertionAtHead(head, tail, 20);
+    print(head);
+    InsertionAtHead(head, tail, 30);
+    print(head);
+    InsertionAtTail(head, tail, 40);
+    print(head);
+    InsertionAtTail(head, tail, 50);
+    print(head);
+    InsertionAtPosition(head, tail, 4, 55);
+    print(head);
+    InsertionAtPosition(head, tail, 6, 99);
+    print(head);
+    DeleteNode(head, tail, 6);
+    print(head);
+    cout << "head : " << head->data << endl;
+    cout << "tail : " << tail->data << endl;
+
+    return 0;
+}
