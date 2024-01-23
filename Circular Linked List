@@ -1,0 +1,130 @@
+#include <iostream>
+using namespace std;
+// Circular Linled List
+//  Linked List - Insertion ,Deletion ,Traversal
+
+class Node
+{
+public:
+    int data;
+    Node *next;
+
+    // constructor
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+    ~Node()
+    {
+        int value = this->data;
+        if (this->next != NULL)
+        {
+            delete next;
+            next = NULL;
+        }
+        cout << "Memory is free for node with data " << value << endl;
+    }
+};
+
+void InsertNode(Node *&tail, int element, int data)
+{
+    // For empty list
+    if (tail == NULL)
+    {
+        Node *newNode = new Node(data);
+        tail = newNode;
+        newNode->next = newNode;
+    }
+    else
+    {
+        // Non-empty list
+        // Considering element is present in the list
+        Node *curr = tail;
+
+        while (curr->data != element)
+        {
+            curr = curr->next;
+        }
+        // Element found -> current is representing element wala node
+
+        Node *temp = new Node(data);
+        temp->next = curr->next;
+        curr->next = temp;
+    }
+}
+
+void DeleteNode(Node *&tail, int element)
+{
+
+    if (tail == NULL)
+    {
+        cout << "List is empty,Please try again";
+        return;
+    }
+    else
+    {
+        Node *prev = tail;
+        Node *curr = prev->next;
+        // Node *curr = tail;
+        // Node *prev = NULL;
+        while (curr->data != element)
+        {
+            prev = curr;
+            curr = curr->next;
+        }
+        prev->next = curr->next;
+
+        // For Linked list with one node only
+        if (curr == prev)
+        {
+            tail = NULL;
+        }
+        // For  Linked List with >2 Nodes
+        else if (tail == curr)
+        {
+            tail = prev;
+        }
+        curr->next = NULL;
+        delete curr;
+    }
+}
+
+void print(Node *tail)
+{
+    // Empty list
+    if (tail == NULL)
+    {
+        cout << "List is empty..";
+        return;
+    }
+
+    Node *temp = tail;
+    do
+    {
+        cout << tail->data << " ";
+        tail = tail->next;
+    } while (tail != temp);
+    cout << endl;
+}
+
+int main()
+{
+    Node *tail = NULL;
+    InsertNode(tail, 5, 10);
+    print(tail);
+    InsertNode(tail, 10, 11);
+    print(tail);
+    InsertNode(tail, 10, 5);
+    print(tail);
+    InsertNode(tail, 5, 100);
+    print(tail);
+    DeleteNode(tail, 5);
+    print(tail);
+    DeleteNode(tail, 11);
+    print(tail);
+    DeleteNode(tail, 10);
+    print(tail);
+
+    return 0;
+}
